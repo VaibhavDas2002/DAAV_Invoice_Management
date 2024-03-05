@@ -166,7 +166,7 @@ include('functions.php');
 								<h4>Qty</h4>
 							</th>
 							<th rowspan="2">
-								<h4>Rate</h4>
+								<h4>Ratee</h4>
 							</th>
 							
 							<th rowspan="2">
@@ -241,7 +241,7 @@ include('functions.php');
 							</td>
 							<td class="text-right">
 								<div class="form-group form-group-sm no-margin-bottom">
-									<input type="text" class="form-control invoice_product_price calculate" name="invoice_price[]" value="0">
+									<input type="text" class="form-control invoice_product_price calculate" name="invoice_product_price[]" value="0">
 								</div>
 							</td>
 							

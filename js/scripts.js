@@ -263,6 +263,7 @@ $(document).ready(function() {
     calculateTotal();
     
     $('#invoice_table').on('input', '.calculate', function () {
+		console.log(this)
 	    updateTotals(this);
 	    calculateTotal();
 	});
@@ -283,22 +284,24 @@ $(document).ready(function() {
 		var tr = $(elem).closest('tr'),
 			quantity = $('[name="invoice_product_qty[]"]', tr).val(),
 			price = $('[name="invoice_product_price[]"]', tr).val(),
-			isPercent = $('[name="invoice_product_discount[]"]', tr).val().indexOf('%') > -1,
-            percent = $.trim($('[name="invoice_product_discount[]"]', tr).val().replace('%', '')),
 			b_height = $('[name="invoice_billing_height[]"]', tr).val(),
 			b_width = $('[name="invoice_billing_width[]"]', tr).val(),
-			t_sqft = (parseFloat(b_height) * parseFloat(b_width)) / 144, // Calculate total square feet
-			subtotal = parseInt(quantity) * parseFloat(price) * t_sqft; // Updated calculation for subtotal
-	
-			if(percent && $.isNumeric(percent) && percent !== 0) {
-				if(isPercent){
-					subtotal = subtotal - ((parseFloat(percent) / 100) * subtotal);
-				} else {
-					subtotal = subtotal - parseFloat(percent);
+			t_sqft = (parseFloat(b_height) * parseFloat(b_width)) / 144 // Calculate total square feet
+			var subtotal_value = parseInt(quantity) * parseFloat(price) * t_sqft; // Updated calculation for subtotal
+			var subtotal=0
+			if (subtotal_value!= "NaN")
+				{
+					subtotal=subtotal_value;
 				}
-			} else {
-				$('[name="invoice_product_discount[]"]', tr).val('');
-			}
+			// if(percent && $.isNumeric(percent) && percent !== 0) {
+			// 	if(isPercent){
+			// 		subtotal = subtotal - ((parseFloat(percent) / 100) * subtotal);
+			// 	} else {
+			// 		subtotal = subtotal - parseFloat(percent);
+			// 	}
+			// } else {
+			// 	$('[name="invoice_product_discount[]"]', tr).val('');
+			// }
 	
 			$('.calculate-sub', tr).val(subtotal.toFixed(2));
 	}
