@@ -129,6 +129,8 @@
           <ul class="treeview-menu">
             <li><a href="product-add.php"><i class="fa fa-plus"></i>Add Products</a></li>
             <li><a href="product-list.php"><i class="fa fa-cog"></i>Manage Products</a></li>
+            <li><a href="design-add.php"><i class="fa fa-solid fa-pen-nib"></i>Add Design</a></li>
+            <li><a href="design-list.php"><i class="fa fa-solid fa-pen-ruler"></i>Manage Design</a></li>
           </ul>
         </li>
         <!-- Menu 3 -->
@@ -151,9 +153,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="customer-add.php"><i class="fa fa-solid fa-truck"></i>Add Delivery</a></li>
-            <li><a href="customer-list.php"><i class="fa fa-solid fa-magnifying-glass-chart"></i>Manage Delivery</a></li>
-            <li><a href="customer-list.php"><i class="fa fa-solid fa-map-location-dot"></i>Manage Delivery Address</a></li>
+            <li><a href="delivery-add.php"><i class="fa fa-solid fa-truck"></i>Add Delivery</a></li>
+            <li><a href="delivery-manage.php"><i class="fa fa-solid fa-magnifying-glass-chart"></i>Manage Delivery</a></li>
+            <li><a href="delivery-manage-add.php"><i class="fa fa-solid fa-map-location-dot"></i>Manage Delivery Address</a></li>
           </ul>
         </li>
 
@@ -165,9 +167,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="customer-add.php"><i class="fa fa-solid fa-folder-plus"></i>Create Work Order</a></li>
-            <li><a href="customer-list.php"><i class="fa fa-solid fa-pen-to-square"></i>Edit Work Order</a></li>
-            <li><a href="customer-list.php"><i class="fa fa-solid fa-gears"></i>Manage Factory Details</a></li>
+            <li><a href="factory-work-order.php"><i class="fa fa-solid fa-folder-plus"></i>Create Work Order</a></li>
+            <li><a href="factory-work-manage.php"><i class="fa fa-solid fa-pen-to-square"></i>Edit Work Order</a></li>
+            <li><a href="factory-manage.php"><i class="fa fa-solid fa-gears"></i>Manage Factory Details</a></li>
           </ul>
         </li>
         
