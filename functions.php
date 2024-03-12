@@ -156,6 +156,47 @@ function popProductsList() {
 }
 
 // populate product dropdown for invoice creation
+function popDesignList() {
+
+	// Connect to the database
+	$mysqli = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS, DATABASE_NAME);
+
+	// output any connection error
+	if ($mysqli->connect_error) {
+	    die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
+	}
+
+	// the query
+	$query = "SELECT * FROM design ORDER BY design_name ASC";
+
+	// mysqli select query
+	$results = $mysqli->query($query);
+
+	if($results) {
+		echo '<select class="form-control item-select">';
+		while($row = $results->fetch_assoc()) {
+
+		    print '.$row["design_name"].' - '.$row["design_desc"].';
+		}
+		echo '</select>';
+
+	} else {
+
+		echo "<p>There are no designs, please add a design.</p>";
+
+	}
+
+	// Frees the memory associated with a result
+	$results->free();
+
+	// close connection 
+	$mysqli->close();
+
+}
+
+
+
+// populate product dropdown for invoice creation
 function popCustomersList() {
 
 	// Connect to the database
@@ -265,6 +306,62 @@ function getProducts() {
 	// close connection 
 	$mysqli->close();
 }
+
+// get designs list
+function getDesigns() {
+
+	// Connect to the database
+	$mysqli = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS, DATABASE_NAME);
+
+	// output any connection error
+	if ($mysqli->connect_error) {
+	    die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
+	}
+
+	// the query
+	$query = "SELECT * FROM design ORDER BY design_name ASC";
+
+	// mysqli select query
+	$results = $mysqli->query($query);
+
+	if($results) {
+
+		print '<table class="table table-striped table-hover table-bordered" id="data-table"><thead><tr>
+
+				<th>Design</th>
+				<th>Description</th>
+				<th>Action</th>
+
+			  </tr></thead><tbody>';
+
+		while($row = $results->fetch_assoc()) {
+
+		    print '
+			    <tr>
+					<td>'.$row["design_name"].'</td>
+				    <td>'.$row["design_desc"].'</td>
+				    <td><a href="design-edit.php?id='.$row["design_id"].'" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> <a data-design-id="'.$row['design_id'].'" class="btn btn-danger btn-xs delete-design"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+			    </tr>
+		    ';
+		}
+
+		print '</tr></tbody></table>';
+
+	} else {
+
+		echo "<p>There are no designs to display.</p>";
+
+	}
+
+	// Frees the memory associated with a result
+	$results->free();
+
+	// close connection 
+	$mysqli->close();
+}
+
+
+
 
 // get user list
 function getUsers() {

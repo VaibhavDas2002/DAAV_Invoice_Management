@@ -998,6 +998,57 @@ if($action == 'add_product') {
 	$mysqli->close();
 }
 
+
+// Adding new product
+if($action == 'add_design') {
+
+	$design_name = $_POST['design_name'];
+	$design_desc = $_POST['design_desc'];
+
+	//our insert query query
+	$query  = "INSERT INTO design
+				(
+					design_name,
+					design_desc,
+				)
+				VALUES (
+					?, 
+                	?
+                );
+              ";
+
+    header('Content-Type: application/json');
+
+	/* Prepare statement */
+	$stmt = $mysqli->prepare($query);
+	if($stmt === false) {
+	  trigger_error('Wrong SQL: ' . $query . ' Error: ' . $mysqli->error, E_USER_ERROR);
+	}
+
+	/* Bind parameters. TYpes: s = string, i = integer, d = double,  b = blob */
+	$stmt->bind_param('ss',$design_name,$design_desc);
+
+	if($stmt->execute()){
+	    //if saving success
+		echo json_encode(array(
+			'status' => 'Success',
+			'message'=> 'Product has been added successfully!'
+		));
+
+	} else {
+	    //if unable to create new record
+	    echo json_encode(array(
+	    	'status' => 'Error',
+	    	//'message'=> 'There has been an error, please try again.'
+	    	'message' => 'There has been an error, please try again.<pre>'.$mysqli->error.'</pre><pre>'.$query.'</pre>'
+	    ));
+	}
+
+	//close database connection
+	$mysqli->close();
+}
+
+
 // Adding new user
 if($action == 'add_user') {
 

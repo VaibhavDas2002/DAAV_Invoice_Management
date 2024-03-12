@@ -22,6 +22,12 @@ $(document).ready(function() {
 	    actionAddProduct();
 	});
 
+	// add design
+	$("#action_add_design").click(function(e) {
+		e.preventDefault();
+		actionAddDesign();
+	})
+
 	// password strength
 	var options = {
         onLoad: function () {
@@ -83,6 +89,13 @@ $(document).ready(function() {
 		updateProduct();
 	});
 
+
+	// update design
+	$(document).on('click', "#action_update_design", function(e) {
+		e.preventDefault();
+		updateDesign();
+	});
+	
 	// login form
 	$(document).bind('keypress', function(e) {
 		e.preventDefault;
@@ -137,6 +150,19 @@ $(document).ready(function() {
 	    $('#confirm').modal({ backdrop: 'static', keyboard: false }).one('click', '#delete', function() {
 			deleteProduct(productId);
 			$(product).closest('tr').remove();
+        });
+   	});
+
+		// delete design
+	$(document).on('click', ".delete-design", function(e) {
+        e.preventDefault();
+
+        var design_id = 'action=delete_design&delete='+ $(this).attr('data-design-id'); //build a post data structure
+        var product = $(this);
+
+	    $('#confirm').modal({ backdrop: 'static', keyboard: false }).one('click', '#delete', function() {
+			deleteDesign(design_id);
+			$(design).closest('tr').remove();
         });
    	});
 
@@ -253,6 +279,7 @@ $(document).ready(function() {
         calculateTotal();
     });
 
+	
     // add new product row on invoice
     var cloned = $('#invoice_table tr:last').clone();
     $(".add-row").click(function(e) {
@@ -436,6 +463,45 @@ $(document).ready(function() {
 
 	}
 
+
+	function actionAddDesign() {
+
+		var errorCounter = validateForm();
+
+		if (errorCounter > 0) {
+		    $("#response").removeClass("alert-success").addClass("alert-warning").fadeIn();
+		    $("#response .message").html("<strong>Error</strong>: It appear's you have forgotten to complete something!");
+		    $("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+		} else {
+
+			$(".required").parent().removeClass("has-error");
+
+			var $btn = $("#action_add_design").button("loading");
+
+			$.ajax({
+
+				url: 'response.php',
+				type: 'POST',
+				data: $("#add_design").serialize(),
+				dataType: 'json',
+				success: function(data){
+					$("#response .message").html("<strong>" + data.status + "</strong>: " + data.message);
+					$("#response").removeClass("alert-warning").addClass("alert-success").fadeIn();
+					$("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+					$btn.button("reset");
+				},
+				error: function(data){
+					$("#response .message").html("<strong>" + data.status + "</strong>: " + data.message);
+					$("#response").removeClass("alert-success").addClass("alert-warning").fadeIn();
+					$("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+					$btn.button("reset");
+				}
+
+			});
+		}
+
+	}
+
 	function actionCreateCustomer(){
 
 		var errorCounter = validateForm();
@@ -541,6 +607,30 @@ $(document).ready(function() {
 
    	}
 
+
+	   function deleteDesign(designId) {
+
+        jQuery.ajax({
+
+        	url: 'response.php',
+            type: 'POST', 
+            data: design_id,
+            dataType: 'json', 
+            success: function(data){
+				$("#response .message").html("<strong>" + data.status + "</strong>: " + data.message);
+				$("#response").removeClass("alert-warning").addClass("alert-success").fadeIn();
+				$("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+				$btn.button("reset");
+			},
+			error: function(data){
+				$("#response .message").html("<strong>" + data.status + "</strong>: " + data.message);
+				$("#response").removeClass("alert-success").addClass("alert-warning").fadeIn();
+				$("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+				$btn.button("reset");
+			} 
+    	});
+
+   	}
    	function deleteUser(userId) {
 
         jQuery.ajax({
@@ -659,6 +749,31 @@ $(document).ready(function() {
 
    	}
 
+	   function updateDesign() {
+
+		var $btn = $("#action_update_design").button("loading");
+
+	 jQuery.ajax({
+
+		 url: 'response.php',
+		 type: 'POST', 
+		 data: $("#update_design").serialize(),
+		 dataType: 'json', 
+		 success: function(data){
+			 $("#response .message").html("<strong>" + data.status + "</strong>: " + data.message);
+			 $("#response").removeClass("alert-warning").addClass("alert-success").fadeIn();
+			 $("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+			 $btn.button("reset");
+		 },
+		 error: function(data){
+			 $("#response .message").html("<strong>" + data.status + "</strong>: " + data.message);
+			 $("#response").removeClass("alert-success").addClass("alert-warning").fadeIn();
+			 $("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+			 $btn.button("reset");
+		 } 
+	 });
+
+	}
    	function updateUser() {
 
    		var $btn = $("#action_update_user").button("loading");
