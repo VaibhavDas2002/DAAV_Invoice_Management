@@ -5,7 +5,7 @@ include('functions.php');
 
 ?>
 
-		<h2>Create New <span class="invoice_type">Invoice</span> </h2>
+		<h2>Create New <span class="invoice_type">Estimate-Bill</span> </h2>
 		<!-- <hr> -->
 
 		<div id="response" class="alert alert-success" style="display:none;">
@@ -27,9 +27,9 @@ include('functions.php');
 						</div>
 						<div class="col-xs-3">
 							<select name="invoice_type" id="invoice_type" class="form-control">
-								<option value="invoice" selected>Invoice</option>
-								<option value="quote">Quote</option>
-								<option value="receipt">Receipt</option>
+								<option value="Estimate-Bill" selected>Estimate-Bill</option>
+								<!-- <option value="quote">Quote</option>
+								<option value="receipt">Receipt</option> -->
 							</select>
 						</div>
 						<div class="col-xs-3">

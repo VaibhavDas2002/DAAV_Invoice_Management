@@ -620,6 +620,59 @@ if($action == 'update_product') {
 	
 }
 
+// Update design
+if($action == 'update_design') {
+
+	// output any connection error
+	if ($mysqli->connect_error) {
+	    die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
+	}
+
+	// invoice design information
+	$getID = $_POST['id']; // id
+	$design_name = $_POST['design_name']; // design name
+	$design_desc = $_POST['design_desc']; // design desc
+
+	// the query
+	$query = "UPDATE designs SET
+				design_name = ?,
+				design_desc = ?
+			 WHERE design_id = ?
+			";
+
+	/* Prepare statement */
+	$stmt = $mysqli->prepare($query);
+	if($stmt === false) {
+	  trigger_error('Wrong SQL: ' . $query . ' Error: ' . $mysqli->error, E_USER_ERROR);
+	}
+
+	/* Bind parameters. TYpes: s = string, i = integer, d = double,  b = blob */
+	$stmt->bind_param(
+		'ssss',
+		$design_name,$design_desc,$design_price,$getID
+	);
+
+	//execute the query
+	if($stmt->execute()){
+	    //if saving success
+		echo json_encode(array(
+			'status' => 'Success',
+			'message'=> 'design has been updated successfully!'
+		));
+
+	} else {
+	    //if unable to create new record
+	    echo json_encode(array(
+	    	'status' => 'Error',
+	    	//'message'=> 'There has been an error, please try again.'
+	    	'message' => 'There has been an error, please try again.<pre>'.$mysqli->error.'</pre><pre>'.$query.'</pre>'
+	    ));
+	}
+
+	//close database connection
+	$mysqli->close();
+	
+}
 
 // Adding new product
 if($action == 'update_invoice') {
@@ -858,7 +911,7 @@ if($action == 'update_invoice') {
 
 }
 
-// Adding new product
+// Delete new product
 if($action == 'delete_product') {
 
 	// output any connection error
@@ -870,6 +923,51 @@ if($action == 'delete_product') {
 
 	// the query
 	$query = "DELETE FROM products WHERE product_id = ?";
+
+	/* Prepare statement */
+	$stmt = $mysqli->prepare($query);
+	if($stmt === false) {
+	  trigger_error('Wrong SQL: ' . $query . ' Error: ' . $mysqli->error, E_USER_ERROR);
+	}
+
+	/* Bind parameters. TYpes: s = string, i = integer, d = double,  b = blob */
+	$stmt->bind_param('s',$id);
+
+	//execute the query
+	if($stmt->execute()){
+	    //if saving success
+		echo json_encode(array(
+			'status' => 'Success',
+			'message'=> 'Product has been deleted successfully!'
+		));
+
+	} else {
+	    //if unable to create new record
+	    echo json_encode(array(
+	    	'status' => 'Error',
+	    	//'message'=> 'There has been an error, please try again.'
+	    	'message' => 'There has been an error, please try again.<pre>'.$mysqli->error.'</pre><pre>'.$query.'</pre>'
+	    ));
+	}
+
+	// close connection 
+	$mysqli->close();
+
+}
+
+
+// Adding new product
+if($action == 'delete_design') {
+
+	// output any connection error
+	if ($mysqli->connect_error) {
+	    die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
+	}
+
+	$id = $_POST["delete"];
+
+	// the query
+	$query = "DELETE FROM design WHERE design_id = ?";
 
 	/* Prepare statement */
 	$stmt = $mysqli->prepare($query);
@@ -999,7 +1097,7 @@ if($action == 'add_product') {
 }
 
 
-// Adding new product
+// Adding new design
 if($action == 'add_design') {
 
 	$design_name = $_POST['design_name'];
@@ -1007,15 +1105,15 @@ if($action == 'add_design') {
 
 	//our insert query query
 	$query  = "INSERT INTO design
-				(
-					design_name,
-					design_desc,
-				)
-				VALUES (
-					?, 
-                	?
-                );
-              ";
+            (
+                design_name,
+                design_desc
+            )
+            VALUES (
+                ?, 
+                ?
+            );
+          ";
 
     header('Content-Type: application/json');
 

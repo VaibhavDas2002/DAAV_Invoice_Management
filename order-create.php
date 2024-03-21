@@ -5,7 +5,7 @@ include('functions.php');
 
 ?>
 
-		<h2>Create New <span class="invoice_type">Bills</span> </h2>
+		<h2>Create New <span class="invoice_type">Order-Bills</span> </h2>
 		<!-- <hr> -->
 
 		<div id="response" class="alert alert-success" style="display:none;">
@@ -20,9 +20,9 @@ include('functions.php');
 				<div class="col-xs-4">
 				
 				</div>
-				<div class="col-xs-8 text-right">
+				<div class="col-md-8 text-right">
 					<div class="row">
-						<div class="col-xs-8">
+						<div class="col-xs-6">
 							<h2 class="">Select Type:</h2>
 						</div>
 						<div class="col-xs-3">
@@ -32,12 +32,12 @@ include('functions.php');
 								<option value="receipt">Receipt</option> -->
 							</select>
 						</div>
-						<!-- <div class="col-xs-3">
+						<div class="col-xs-3">
 							<select name="invoice_status" id="invoice_status" class="form-control">
-								<option value="open" selected>Open</option>
-								<option value="paid">Paid</option>
+								<option value="Not-Verified" selected>Not Verified</option>
+								<option value="Verified">Verified</option>
 							</select>
-						</div> -->
+						</div> 
 					</div>
 					<div class="col-xs-4">
 				        <div class="form-group">
@@ -60,7 +60,7 @@ include('functions.php');
 				        </div>
 				    </div> -->
 					<div class="input-group col-xs-4 float-right">
-						<span class="input-group-addon">#<?php echo INVOICE_PREFIX ?></span>
+						<span class="input-group-addon">#<?php echo ORDER_PREFIX ?></span>
 						<input type="text" name="invoice_id" id="invoice_id" class="form-control required" placeholder="Invoice Number" aria-describedby="sizing-addon1" value="<?php getInvoiceId(); ?>">
 					</div>
 				</div>
@@ -180,7 +180,7 @@ include('functions.php');
 							<td>
 								<div class="form-group form-group-sm  no-margin-bottom">
 									<a href="#" class="btn btn-danger btn-xs delete-row"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-									<input type="text" class="form-control form-group-sm item-input invoice_product" name="invoice_product[]" placeholder="Enter Design Name OR Description">
+									<input type="text" class="form-control form-group-md item-input invoice_product" name="invoice_product[]" placeholder="Enter Design Name OR Description">
 									<p class="item-select">or <a href="#">select a product</a></p>
 								</div>
 							</td>
@@ -250,7 +250,7 @@ include('functions.php');
 				</div>
 
 				
-				<div class="col-xs-6 no-padding-right">
+				<!-- <div class="col-xs-6 no-padding-right">
 					<div class="row">
 						<div class="col-xs-4 col-xs-offset-5">
 							<strong>Sub Total:</strong>
@@ -302,7 +302,7 @@ include('functions.php');
 							<input type="hidden" name="invoice_total" id="invoice_total">
 						</div>
 					</div>
-				</div>
+				</div> -->
 
 		
 					<div class="col-xs-6">
@@ -310,7 +310,7 @@ include('functions.php');
 					</div>
 
 					<div class="col-xs-6 margin-top btn-group">
-						<input type="submit" id="action_create_invoice" class="btn btn-success float-right" value="Create Invoice" data-loading-text="Creating...">
+						<input type="submit" id="action_create_invoice" class="btn btn-success float-right" value="Create Order" data-loading-text="Creating...">
 					</div>
 			
 
