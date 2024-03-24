@@ -153,15 +153,15 @@ $(document).ready(function() {
         });
    	});
 
-		// delete design
+	// delete design
 	$(document).on('click', ".delete-design", function(e) {
         e.preventDefault();
 
-        var design_id = 'action=delete_design&delete='+ $(this).attr('data-design-id'); //build a post data structure
+        var designId = 'action=delete_design&delete='+ $(this).attr('data-design-id'); //build a post data structure
         var design = $(this);
 
 	    $('#confirm').modal({ backdrop: 'static', keyboard: false }).one('click', '#delete', function() {
-			deleteDesign(design_id);
+			deleteDesign(designId);
 			$(design).closest('tr').remove();
         });
    	});
@@ -608,29 +608,29 @@ $(document).ready(function() {
    	}
 
 
-function deleteDesign(designId) {
-    jQuery.ajax({
-        url: 'response.php',
-        type: 'POST',
-        data: { design_id: designId }, // Corrected data object format
-        dataType: 'json',
-        success: function(data) {
-            $("#response .message").html("<strong>" + data.status + "</strong>: " + data.message);
-            $("#response").removeClass("alert-warning").addClass("alert-success").fadeIn();
-            $("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
-            // Assuming $btn is defined and represents the button that triggers deleteDesign
-            $btn.button("reset");
-        },
-        error: function(xhr, textStatus, errorThrown) {
-            var errorMessage = xhr.status + ': ' + xhr.statusText;
-            $("#response .message").html("<strong>Error</strong>: " + errorMessage);
-            $("#response").removeClass("alert-success").addClass("alert-warning").fadeIn();
-            $("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
-            // Assuming $btn is defined and represents the button that triggers deleteDesign
-            $btn.button("reset");
-        }
-    });
-}
+	function deleteDesign(designId) {
+		jQuery.ajax({
+			url: 'response.php',
+			type: 'POST',
+			data: designId, // Corrected data object format
+			dataType: 'json',
+			success: function(data) {
+				$("#response .message").html("<strong>" + data.status + "</strong>: " + data.message);
+				$("#response").removeClass("alert-warning").addClass("alert-success").fadeIn();
+				$("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+				// Assuming $btn is defined and represents the button that triggers deleteDesign
+				$btn.button("reset");
+			},
+			error: function(xhr, textStatus, errorThrown) {
+				var errorMessage = xhr.status + ': ' + xhr.statusText;
+				$("#response .message").html("<strong>Error</strong>: " + errorMessage);
+				$("#response").removeClass("alert-success").addClass("alert-warning").fadeIn();
+				$("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+				// Assuming $btn is defined and represents the button that triggers deleteDesign
+				$btn.button("reset");
+			}
+		});
+	}
 
    	function deleteUser(userId) {
 
@@ -750,11 +750,11 @@ function deleteDesign(designId) {
 
    	}
 
-	   function updateDesign() {
+	function updateDesign() {
 
-		var $btn = $("#action_update_design").button("loading");
+	var $btn = $("#action_update_design").button("loading");
 
-	 jQuery.ajax({
+	jQuery.ajax({
 
 		 url: 'response.php',
 		 type: 'POST', 

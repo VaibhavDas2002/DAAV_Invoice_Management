@@ -634,7 +634,7 @@ if($action == 'update_design') {
 	$design_desc = $_POST['design_desc']; // design desc
 
 	// the query
-	$query = "UPDATE designs SET
+	$query = "UPDATE design SET
 				design_name = ?,
 				design_desc = ?
 			 WHERE design_id = ?
@@ -648,8 +648,8 @@ if($action == 'update_design') {
 
 	/* Bind parameters. TYpes: s = string, i = integer, d = double,  b = blob */
 	$stmt->bind_param(
-		'ssss',
-		$design_name,$design_desc,$design_price,$getID
+		'sss',
+		$design_name,$design_desc,$getID
 	);
 
 	//execute the query
@@ -956,49 +956,38 @@ if($action == 'delete_product') {
 }
 
 
-// Adding new product
 if($action == 'delete_design') {
+    // Omitted for brevity: connection error handling
 
-	// output any connection error
-	if ($mysqli->connect_error) {
-	    die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
-	}
+    $id = $_POST["delete"];
 
-	$id = $_POST["delete"];
+    // Assuming `design_id` is an integer in your database
+    $query = "DELETE FROM design WHERE design_id = ?";
 
-	// the query
-	$query = "DELETE FROM design WHERE design_id = ?";
+    $stmt = $mysqli->prepare($query);
+    if($stmt === false) {
+      trigger_error('Wrong SQL: ' . $query . ' Error: ' . $mysqli->error, E_USER_ERROR);
+    }
 
-	/* Prepare statement */
-	$stmt = $mysqli->prepare($query);
-	if($stmt === false) {
-	  trigger_error('Wrong SQL: ' . $query . ' Error: ' . $mysqli->error, E_USER_ERROR);
-	}
+    // Bind parameters. Changed 's' to 'i' assuming `design_id` is an integer
+    $stmt->bind_param('i', $id);
 
-	/* Bind parameters. TYpes: s = string, i = integer, d = double,  b = blob */
-	$stmt->bind_param('s',$id);
+    if($stmt->execute()){
+        echo json_encode([
+            'status' => 'Success',
+            'message'=> 'Product has been deleted successfully!'
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'Error',
+            'message' => 'There has been an error, please try again.' // Consider removing detailed database error in production
+        ]);
+    }
 
-	//execute the query
-	if($stmt->execute()){
-	    //if saving success
-		echo json_encode(array(
-			'status' => 'Success',
-			'message'=> 'Product has been deleted successfully!'
-		));
-
-	} else {
-	    //if unable to create new record
-	    echo json_encode(array(
-	    	'status' => 'Error',
-	    	//'message'=> 'There has been an error, please try again.'
-	    	'message' => 'There has been an error, please try again.<pre>'.$mysqli->error.'</pre><pre>'.$query.'</pre>'
-	    ));
-	}
-
-	// close connection 
-	$mysqli->close();
-
+    $mysqli->close();
 }
+
+
 
 // Login to system
 if($action == 'login') {

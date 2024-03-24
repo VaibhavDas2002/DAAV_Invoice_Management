@@ -1,11 +1,9 @@
 <?php
-
 include('header.php');
 include('functions.php');
-
 ?>
 
-<h1>Product List</h1>
+<h1>Design List</h1>
 <hr>
 
 <div class="row">
