@@ -254,6 +254,11 @@ $(document).ready(function() {
 	    actionCreateInvoice();
 	});
 
+	$("#action_create_order").click(function(e) {
+		e.preventDefault();
+	    actionCreateOrder();
+	});
+
 	// update invoice
 	$(document).on('click', "#action_edit_invoice", function(e) {
 		e.preventDefault();
@@ -569,6 +574,48 @@ $(document).ready(function() {
 					$("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
 					$("#create_invoice").before().html("<a href='../invoice-add.php' class='btn btn-primary'>Create new invoice</a>");
 					$("#create_invoice").remove();
+					$btn.button("reset");
+				},
+				error: function(data){
+					$("#response .message").html("<strong>" + data.status + "</strong>: " + data.message);
+					$("#response").removeClass("alert-success").addClass("alert-warning").fadeIn();
+					$("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+					$btn.button("reset");
+				} 
+
+			});
+		}
+
+	}
+
+
+	function actionCreateOrder(){
+
+		var errorCounter = validateForm();
+
+		if (errorCounter > 0) {
+		    $("#response").removeClass("alert-success").addClass("alert-warning").fadeIn();
+		    $("#response .message").html("<strong>Error</strong>: It appear's you have forgotten to complete something!");
+		    $("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+		} else {
+
+			var $btn = $("#action_create_order").button("loading");
+
+			$(".required").parent().removeClass("has-error");
+			$("#create_invoice").find(':input:disabled').removeAttr('disabled');
+
+			$.ajax({
+
+				url: 'response.php',
+				type: 'POST',
+				data: $("#create_order").serialize(),
+				dataType: 'json',
+				success: function(data){
+					$("#response .message").html("<strong>" + data.status + "</strong>: " + data.message);
+					$("#response").removeClass("alert-warning").addClass("alert-success").fadeIn();
+					$("html, body").animate({ scrollTop: $('#response').offset().top }, 1000);
+					$("#create_order").before().html("<a href='../invoice-add.php' class='btn btn-primary'>Create new Order Bill</a>");
+					$("#create_order").remove();
 					$btn.button("reset");
 				},
 				error: function(data){

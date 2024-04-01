@@ -13,8 +13,8 @@ include('functions.php');
 			<div class="message"></div>
 		</div>
 
-		<form method="post" id="create_invoice">
-			<input type="hidden" name="action" value="create_invoice">
+		<form method="post" id="create_order">
+			<input type="hidden" name="action" value="create_order">
 			
 			<div class="row">
 				<div class="col-xs-4">
@@ -26,14 +26,14 @@ include('functions.php');
 							<h2 class="">Select Type:</h2>
 						</div>
 						<div class="col-xs-3">
-							<select name="invoice_type" id="invoice_type" class="form-control">
+							<select name="order_type" id="order_type" class="form-control">
 								<option value="order" selected>Order</option>
 								<!-- <option value="quote">Quote</option>
 								<option value="receipt">Receipt</option> -->
 							</select>
 						</div>
 						<div class="col-xs-3">
-							<select name="invoice_status" id="invoice_status" class="form-control">
+							<select name="order_status" id="order_status" class="form-control">
 								<option value="Not-Verified" selected>Not Verified</option>
 								<option value="Verified">Verified</option>
 							</select>
@@ -49,19 +49,30 @@ include('functions.php');
 				            </div>
 				        </div>
 				    </div>
-				    <!-- <div class="col-xs-4">
+				    <div class="col-xs-4">
 				        <div class="form-group">
-				            <div class="input-group date" id="invoice_due_date">
-				                <input type="text" class="form-control required" name="invoice_due_date" placeholder="Due Date" data-date-format="<?php echo DATE_FORMAT ?>" />
+				            <div class="input-group date" id="order_cutting_date">
+				                <input type="text" class="form-control required" name="order_cutting_date" placeholder="Cutting Date" data-date-format="<?php echo DATE_FORMAT ?>" />
 				                <span class="input-group-addon">
 				                    <span class="glyphicon glyphicon-calendar"></span>
 				                </span>
 				            </div>
 				        </div>
-				    </div> -->
+				    </div>
+
+					<div class="col-xs-4">
+				        <div class="form-group">
+				            <div class="input-group date" id="order_delivery_date">
+				                <input type="text" class="form-control required" name="order_delivery_date" placeholder="Delivery Date" data-date-format="<?php echo DATE_FORMAT ?>" />
+				                <span class="input-group-addon">
+				                    <span class="glyphicon glyphicon-calendar"></span>
+				                </span>
+				            </div>
+				        </div>
+				    </div>
 					<div class="input-group col-xs-4 float-right">
 						<span class="input-group-addon">#<?php echo ORDER_PREFIX ?></span>
-						<input type="text" name="invoice_id" id="invoice_id" class="form-control required" placeholder="Invoice Number" aria-describedby="sizing-addon1" value="<?php getInvoiceId(); ?>">
+						<input type="text" name="order_id" id="order_id" class="form-control required" placeholder="Order Number" aria-describedby="sizing-addon1" value="<?php getOrderId(); ?>">
 					</div>
 				</div>
 			</div>
@@ -245,75 +256,14 @@ include('functions.php');
 					<div class="input-group form-group-sm textarea no-margin-bottom">
 						<textarea class-"form-control" name="invoice_notes" placeholder="Additional Notes..."></textarea>
 					</div>
-
-					
 				</div>
-
-				
-				<!-- <div class="col-xs-6 no-padding-right">
-					<div class="row">
-						<div class="col-xs-4 col-xs-offset-5">
-							<strong>Sub Total:</strong>
-						</div>
-						<div class="col-xs-3">
-							<?php echo CURRENCY ?><span class="invoice-sub-total">0.00</span>
-							<input type="hidden" name="invoice_subtotal" id="invoice_subtotal">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-4 col-xs-offset-5">
-							<strong>Discount:</strong>
-						</div>
-						<div class="col-xs-3">
-						<div class="input-group input-group-sm">
-							<span class="input-group-addon"><?php echo CURRENCY ?></span>
-							<input type="text" class="form-control calculate discount" name="invoice_discount" aria-describedby="sizing-addon1" placeholder="0.00">
-						</div>
-					</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-4 col-xs-offset-5">
-							<strong class="shipping">Shipping:</strong>
-						</div>
-						<div class="col-xs-3">
-							<div class="input-group input-group-sm">
-								<span class="input-group-addon"><?php echo CURRENCY ?></span>
-								<input type="text" class="form-control calculate shipping" name="invoice_shipping" aria-describedby="sizing-addon1" placeholder="0.00">
-							</div>
-						</div>
-					</div>
-					<?php if (ENABLE_VAT == true) { ?>
-					<div class="row">
-						<div class="col-xs-4 col-xs-offset-5">
-							<strong>TAX/VAT:</strong><br>Remove TAX/VAT <input type="checkbox" class="remove_vat">
-						</div>
-						<div class="col-xs-3">
-							<?php echo CURRENCY ?><span class="invoice-vat" data-enable-vat="<?php echo ENABLE_VAT ?>" data-vat-rate="<?php echo VAT_RATE ?>" data-vat-method="<?php echo VAT_INCLUDED ?>">0.00</span>
-							<input type="hidden" name="invoice_vat" id="invoice_vat">
-						</div>
-					</div>
-					<?php } ?>
-					<div class="row">
-						<div class="col-xs-4 col-xs-offset-5">
-							<strong>Total:</strong>
-						</div>
-						<div class="col-xs-3">
-							<?php echo CURRENCY ?><span class="invoice-total">0.00</span>
-							<input type="hidden" name="invoice_total" id="invoice_total">
-						</div>
-					</div>
-				</div> -->
-
-		
 					<div class="col-xs-6">
 						<input type="email" name="custom_email" id="custom_email" class="custom_email_textarea" placeholder="Enter custom email if you wish to override the default invoice type email msg!"></input>
 					</div>
 
 					<div class="col-xs-6 margin-top btn-group">
-						<input type="submit" id="action_create_invoice" class="btn btn-success float-right" value="Create Order" data-loading-text="Creating...">
+						<input type="submit" id="action_create_order" class="btn btn-success float-right" value="Create Order" data-loading-text="Creating...">
 					</div>
-			
-
 			</div>
 			<div class="row">
 				

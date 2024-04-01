@@ -116,6 +116,44 @@ function getInvoiceId() {
 	
 }
 
+
+
+// Initial order number
+function getOrderId() {
+
+	// Connect to the database
+	$mysqli = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS, DATABASE_NAME);
+
+	// output any connection error
+	if ($mysqli->connect_error) {
+	    die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
+	}
+
+	$query = "SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1";
+
+	if ($result = $mysqli->query($query)) {
+
+		$row_cnt = $result->num_rows;
+
+	    $row = mysqli_fetch_assoc($result);
+
+	    //var_dump($row);
+
+	    if($row_cnt == 0){
+			echo INVOICE_INITIAL_VALUE;
+		} else {
+			echo $row['order_id'] + 1; 
+		}
+
+	    // Frees the memory associated with a result
+		$result->free();
+
+		// close connection 
+		$mysqli->close();
+	}
+	
+}
+
 // populate product dropdown for invoice creation
 function popProductsList() {
 
