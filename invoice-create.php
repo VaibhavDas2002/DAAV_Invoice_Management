@@ -203,7 +203,7 @@ include('functions.php');
 							</td>
 							<td class="text-right">
 								<div class="form-group form-group-sm no-margin-bottom">
-								<input type="text" class="form-control form-group-sm item-input invoice_door_skin" name="invoice_door_skin[]" placeholder="Enter Door Skin">
+								<input type="text" class="form-control form-group-sm design-input invoice_door_skin" name="invoice_door_skin[]" placeholder="Enter Door Skin">
 								<p class="design-select">or <a href="#">select a Skin</a></p>
 								</div>
 							</td>
@@ -211,25 +211,25 @@ include('functions.php');
 							<td class="text-right">
 								<div class="input-group input-group-sm  no-margin-bottom">
 									<span class="input-group-addon"><?php echo SIZE_FORMAT ?></span>
-									<input type="number" class="form-control order_height" name="invoice_order_height[]" id="invoice_order_height" value="0"aria-describedby="sizing-addon1" placeholder="0.00">
+									<input type="number" class="form-control updatesizeh" name="invoice_order_height[]" id="invoice_order_height" value="0"aria-describedby="sizing-addon1" placeholder="0.00">
 								</div>
 							</td>
 							<td class="text-right">
 								<div class="input-group input-group-sm">
 									<span class="input-group-addon"><?php echo SIZE_FORMAT ?></span>
-									<input type="number" class="form-control " name="invoice_oder_width[]" id="invoice_order_width" value="0" aria-describedby="sizing-addon1">
+									<input type="number" class="form-control updatesizew" name="invoice_order_width[]" id="invoice_order_width" value="0" aria-describedby="sizing-addon1">
 								</div>
 							</td>
 							<td class="text-right">
 								<div class="input-group input-group-sm">
 									<span class="input-group-addon"><?php echo SIZE_FORMAT ?></span>
-									<input type="number" class="form-control calculate" name="invoice_billing_height[]" id="invoice_billing_height" value="0" aria-describedby="sizing-addon1">
+									<input type="number" class="form-control calculate updatesizeh" name="invoice_billing_height[]" id="invoice_billing_height" value="0" aria-describedby="sizing-addon1" disabled>
 								</div>
 							</td>
 							<td class="text-right">
 								<div class="input-group input-group-sm">
 									<span class="input-group-addon"><?php echo SIZE_FORMAT ?></span>
-									<input type="number" class="form-control calculate" name="invoice_billing_width[]" id="invoice_billing_width" value="0" aria-describedby="sizing-addon1">
+									<input type="number" class="form-control calculate updatesizew" name="invoice_billing_width[]" id="invoice_billing_width" value="0" aria-describedby="sizing-addon1" disabled>
 								</div>
 							</td>
 
@@ -344,6 +344,25 @@ include('functions.php');
 		      </div>
 		      <div class="modal-body">
 				<?php popProductsList(); ?>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" data-dismiss="modal" class="btn btn-primary" id="selected">Add</button>
+				<button type="button" data-dismiss="modal" class="btn">Cancel</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+
+		<div id="insert_d" class="modal fade">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">Select Design</h4>
+		      </div>
+		      <div class="modal-body">
+				<?php popDesignList(); ?>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" data-dismiss="modal" class="btn btn-primary" id="selected">Add</button>

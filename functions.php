@@ -193,7 +193,7 @@ function popProductsList() {
 
 }
 
-// populate product dropdown for invoice creation
+// populate Design dropdown for invoice creation
 function popDesignList() {
 
 	// Connect to the database
@@ -205,16 +205,16 @@ function popDesignList() {
 	}
 
 	// the query
-	$query = "SELECT * FROM design ORDER BY design_name ASC";
+	$query = "SELECT * FROM design ORDER BY design_id ASC";
 
 	// mysqli select query
 	$results = $mysqli->query($query);
 
 	if($results) {
-		echo '<select class="form-control item-select">';
+		echo '<select class="form-control design-select">';
 		while($row = $results->fetch_assoc()) {
 
-		    print '.$row["design_name"].' - '.$row["design_desc"].';
+		    print '<option value="">'.$row["design_name"].' - '.$row["design_desc"].'</option>';
 		}
 		echo '</select>';
 
